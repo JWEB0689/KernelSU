@@ -1,7 +1,59 @@
-# Reporting Security Issues
+# Security Policy
 
-The KernelSU team and community take security bugs in KernelSU seriously. We appreciate your efforts to responsibly disclose your findings, and will make every effort to acknowledge your contributions.
+## Supported Versions
 
-To report a security issue, please use the GitHub Security Advisory ["Report a Vulnerability"](https://github.com/tiann/KernelSU/security/advisories/new) tab, or you can mailto [weishu](mailto:twsxtd@gmail.com) directly.
+We release security patches for the following versions:
 
-The KernelSU team will send a response indicating the next steps in handling your report. After the initial reply to your report, the security team will keep you informed of the progress towards a fix and full announcement, and may ask for additional information or guidance.
+| Version | Supported          |
+| ------- | ------------------ |
+| latest   | ✅ Yes |
+| previous | ✅ Security fixes only |
+| < older | ❌ No longer supported |
+
+## Reporting a Vulnerability
+
+**Please do NOT report security vulnerabilities via public GitHub issues.**
+
+Instead, please report them via:
+
+- **Email**: security@jeremyweber.dev
+- **GitHub Security Advisory**: [Report a vulnerability](https://github.com/JWEB0689/KernelSU/security/advisories/new)
+
+We will acknowledge receipt within 48 hours and provide a more detailed response within 7 days.
+
+## Disclosure Policy
+
+- We follow [Coordinated Vulnerability Disclosure](https://en.wikipedia.org/wiki/Coordinated_vulnerability_disclosure)
+- We aim to patch critical vulnerabilities within 7 days
+- We will credit reporters in the security advisory (unless anonymity requested)
+- Public disclosure coordinated after fix is available
+
+## Security Best Practices
+
+### For Users
+
+- Always use the latest stable release
+- Verify signatures/checksums of downloads
+- Keep dependencies updated
+- Report suspicious behavior
+
+### For Contributors
+
+- Never commit secrets, keys, or tokens
+- Run security scans before PR: `{{SECURITY_CMD}}`
+- Follow secure coding practices for {{LANGUAGE}}
+- Review dependencies for known vulnerabilities
+
+## Security Features
+
+Kernel-based root solution, LKM loading, userspace daemon
+
+## Audit History
+
+| Date | Version | Type | Description |
+|------|---------|------|-------------|
+| 2026-06-26 | current | Code review | Initial security audit after CI hardening |
+
+---
+
+*Template based on rtk/odysseus security policies*
