@@ -1,48 +1,74 @@
+# Dependabot configuration for automated dependency updates
+# Place at .github/dependabot.yml
+
 version: 2
 updates:
-  - package-ecosystem: github-actions
-    directory: /
+  # Rust (Cargo)
+  - package-ecosystem: "cargo"
+    directory: "/"
     schedule:
-      interval: weekly
-    groups:
-      actions:
-        patterns:
-          - "*"
-  - package-ecosystem: cargo
-    directory: userspace/ksud
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "rust"
+    commit-message:
+      prefix: "chore(deps):"
+
+  # Python (pip)
+  - package-ecosystem: "pip"
+    directory: "/"
     schedule:
-      interval: weekly
-    allow:
-      - dependency-type: "all"
-    groups:
-      crates:
-        patterns:
-          - "*"
-  - package-ecosystem: cargo
-    directory: userspace/ksuinit
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "python"
+    commit-message:
+      prefix: "chore(deps):"
+
+  # Node.js (npm)
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
-      interval: weekly
-    allow:
-      - dependency-type: "all"
-    groups:
-      crates:
-        patterns:
-          - "*"
-  - package-ecosystem: gradle
-    directory: manager
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "node"
+    commit-message:
+      prefix: "chore(deps):"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
-      interval: weekly
-    groups:
-      maven:
-        patterns:
-          - "*"
-  - package-ecosystem: npm
-    directory: website
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "chore(deps):"
+
+  # Docker
+  - package-ecosystem: "docker"
+    directory: "/"
     schedule:
-      interval: weekly
-    allow:
-      - dependency-type: "all"
-    groups:
-      npm:
-        patterns:
-          - "*"
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "docker"
+    commit-message:
+      prefix: "chore(deps):"

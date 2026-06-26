@@ -1,45 +1,53 @@
 name: Release
+
 on:
   push:
     tags:
-      - "v*"
-  workflow_dispatch:
+      - 'v*'
+
+permissions:
+  contents: write
 
 jobs:
-  build-manager:
-    uses: ./.github/workflows/build-manager.yml
-    secrets: inherit
   release:
-    needs:
-      - build-manager
-    runs-on: ubuntu-latest
+    name: Build & Release
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v7
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Rename ksud
+      - name: Setup toolchain
+        uses: ./.github/actions/setup-toolchain
+        # For Rust: uses: dtolnay/rust-toolchain@stable
+        # For Python: uses: actions/setup-python@v5 with python-version: "3.11"
+        # For Node: uses: actions/setup-node@v4 with node-version: "22"
+
+      - name: Build release
         run: |
-          mkdir -p ksud
-          for dir in ./ksud-*; do
-              if [ -d "$dir" ]; then
-                 echo "----- Rename $dir -----"
-                 ksud_platform_name=$(basename "$dir")
-                 find "$dir" -type f -name "ksud" -path "*/release/*" | while read -r ksud_file; do
-                   if [ -f "$ksud_file" ]; then
-                     mv "$ksud_file" "ksud/$ksud_platform_name"
-                   fi
-                 done
-              fi
-          done
+          # Replace with project-specific build command
+          # Rust: cargo build --release
+          # Python: python -m build
+          # Node: npm run build
+          echo "Build command not configured"
 
-      - name: Display structure of downloaded files
-        run: ls -R
+      - name: Package artifacts
+        run: |
+          # Create release archive
+          VERSION="${GITHUB_REF_NAME#v}"
+          mkdir -p release
+          # Copy binaries/artifacts to release/
+          # Example: cp target/release/myapp release/myapp-${VERSION}-${{ runner.os }}
+          echo "Packaging not configured"
 
-      - name: release
+      - name: Upload release assets
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            manager/*.apk
-            android*-lkm/*_kernelsu.ko
-            ksud/ksud-*
-            ksuinit/**
+          files: release/*
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
